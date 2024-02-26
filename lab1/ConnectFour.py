@@ -35,8 +35,12 @@ class ProbabilisticConnectFour(TwoPlayerGame):
             possible_moves.append(column + 1)
         
         chosen_column = random.choice(possible_moves)
+        if chosen_column in self.possible_moves():
+            self._make_move(chosen_column)
+            
+    def _make_move(self, column):
         line = np.argmin(self.board[:, column] != 0)
-        self.board[line, chosen_column] = self.current_player
+        self.board[line, column] = self.current_player
 
     def show(self):
         print(
