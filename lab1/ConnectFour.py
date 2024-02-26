@@ -91,16 +91,4 @@ POS_DIR = np.array(
     + [[[0, i], [1, -1]] for i in range(3, 7)]
 )
 
-if __name__ == "__main__":
-    # LET'S PLAY !
 
-    from easyAI import AI_Player, Negamax, SSS
-
-    ai_algo_neg = Negamax(5)
-    ai_algo_sss = SSS(5)
-    game = ProbabilisticConnectFour([AI_Player(ai_algo_neg), AI_Player(ai_algo_sss)])
-    game.play()
-    if game.lose():
-        print("Player %d wins." % (game.opponent_index))
-    else:
-        print("Looks like we have a draw.")
