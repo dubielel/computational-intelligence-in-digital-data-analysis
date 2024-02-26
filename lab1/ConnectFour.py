@@ -1,3 +1,5 @@
+import random
+
 try:
     import numpy as np
 except ImportError:
@@ -7,7 +9,7 @@ except ImportError:
 from easyAI import TwoPlayerGame
 
 
-class ConnectFour(TwoPlayerGame):
+class ProbabilisticConnectFour(TwoPlayerGame):
     """
     The game of Connect Four, as described here:
     http://en.wikipedia.org/wiki/Connect_Four
@@ -32,8 +34,9 @@ class ConnectFour(TwoPlayerGame):
         if column < len(self.board[0]) - 1:
             possible_moves.append(column + 1)
         
+        chosen_column = random.choice(possible_moves)
         line = np.argmin(self.board[:, column] != 0)
-        self.board[line, column] = self.current_player
+        self.board[line, chosen_column] = self.current_player
 
     def show(self):
         print(
@@ -91,7 +94,7 @@ if __name__ == "__main__":
 
     ai_algo_neg = Negamax(5)
     ai_algo_sss = SSS(5)
-    game = ConnectFour([AI_Player(ai_algo_neg), AI_Player(ai_algo_sss)])
+    game = ProbabilisticConnectFour([AI_Player(ai_algo_neg), AI_Player(ai_algo_sss)])
     game.play()
     if game.lose():
         print("Player %d wins." % (game.opponent_index))
