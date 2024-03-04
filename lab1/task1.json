@@ -1,0 +1,45 @@
+{
+    "ProbabilisticConnectFour": [
+        {
+            "d35": {
+                "first_Negamax_d3": 0.0642462438233876,
+                "second_Negamax_d5": 0.4220315148200169,
+                "results": {
+                    "1": 51,
+                    "2": 49
+                }
+            }
+        },
+        {
+            "d63": {
+                "first_Negamax_d6": 0.9581440526850644,
+                "second_Negamax_d3": 0.06214873259079031,
+                "results": {
+                    "1": 59,
+                    "2": 40,
+                    "0": 1
+                }
+            }
+        }
+    ],
+    "ConnectFour": [
+        {
+            "d35": {
+                "first_Negamax_d3": 0.05661818973262395,
+                "second_Negamax_d5": 0.32552702513000165,
+                "results": {
+                    "2": 100
+                }
+            }
+        },
+        {
+            "d63": {
+                "first_Negamax_d6": 0.7330627180368368,
+                "second_Negamax_d3": 0.05370752755474194,
+                "results": {
+                    "2": 100
+                }
+            }
+        }
+    ]
+}
