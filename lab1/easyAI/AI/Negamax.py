@@ -9,7 +9,7 @@ LOWERBOUND, EXACT, UPPERBOUND = -1, 0, 1
 inf = float("infinity")
 
 
-def negamax(game, depth, origDepth, scoring, alpha=+inf, beta=-inf, tt=None):
+def negamax(game, depth, origDepth, scoring, alpha=+inf, beta=-inf, tt=None, alpha_beta=True):
     """
     This implements Negamax with transposition tables.
     This method is not meant to be used directly. See ``easyAI.Negamax``
@@ -36,6 +36,9 @@ def negamax(game, depth, origDepth, scoring, alpha=+inf, beta=-inf, tt=None):
                 alpha = max(alpha, value)
             elif flag == UPPERBOUND:
                 beta = min(beta, value)
+
+            if alpha_beta is False:
+                return value
 
             if alpha >= beta:
                 if depth == origDepth:
@@ -76,7 +79,7 @@ def negamax(game, depth, origDepth, scoring, alpha=+inf, beta=-inf, tt=None):
         game.make_move(move)
         game.switch_player()
 
-        move_alpha = -negamax(game, depth - 1, origDepth, scoring, -beta, -alpha, tt)
+        move_alpha = -negamax(game, depth - 1, origDepth, scoring, -beta, -alpha, tt, alpha_beta=alpha_beta)
 
         if unmake_move:
             game.switch_player()
@@ -92,7 +95,7 @@ def negamax(game, depth, origDepth, scoring, alpha=+inf, beta=-inf, tt=None):
             # best_move = move
             if depth == origDepth:
                 state.ai_move = move
-            if alpha >= beta:
+            if alpha_beta is True and alpha >= beta:
                 break
 
     if tt is not None:
@@ -184,5 +187,6 @@ class Negamax:
             -self.win_score if self.alpha_beta else -inf,
             +self.win_score if self.alpha_beta else +inf,
             self.tt,
+            self.alpha_beta,
         )
         return game.ai_move
