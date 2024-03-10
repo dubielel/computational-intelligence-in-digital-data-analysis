@@ -41,7 +41,7 @@ def play_game(
 def task1(algo, num_of_games: int) -> None:
     games = (ProbabilisticConnectFour, ConnectFour)
     ultimate_results = {ProbabilisticConnectFour.__name__: [], ConnectFour.__name__: []}
-    depths = [(3, 5), (6, 3), (6, 1), (8, 1)]
+    depths = [(3, 1), (4, 2)]
     alpha_betas = [(True, True), (True, False), (False, True), (False, False)]
 
     for game in games:
@@ -69,7 +69,7 @@ def task1(algo, num_of_games: int) -> None:
                     }
                 )
 
-    with open("task2_a.json", "w") as fp:
+    with open("task2_c.json", "w") as fp:
         json.dump(ultimate_results, fp, indent=4)
 
 
