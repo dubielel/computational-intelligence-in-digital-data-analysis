@@ -1,0 +1,159 @@
+{
+    "ProbabilisticConnectFour": [
+        {
+            "d35_abTT": {
+                "first_Negamax_d3_abT": 0.008345682091641249,
+                "second_Negamax_d5_abT": 0.05525386018290682,
+                "results": {
+                    "2": 6,
+                    "1": 4
+                }
+            }
+        },
+        {
+            "d35_abTF": {
+                "first_Negamax_d3_abT": 0.00771941573563681,
+                "second_Negamax_d5_abF": 0.04881823642739788,
+                "results": {
+                    "2": 7,
+                    "1": 3
+                }
+            }
+        },
+        {
+            "d35_abFT": {
+                "first_Negamax_d3_abF": 0.007774881369236077,
+                "second_Negamax_d5_abT": 0.05140547750936374,
+                "results": {
+                    "2": 3,
+                    "1": 7
+                }
+            }
+        },
+        {
+            "d35_abFF": {
+                "first_Negamax_d3_abF": 0.0073760841864739255,
+                "second_Negamax_d5_abF": 0.046357865778658636,
+                "results": {
+                    "2": 5,
+                    "1": 4,
+                    "0": 1
+                }
+            }
+        },
+        {
+            "d63_abTT": {
+                "first_Negamax_d6_abT": 0.12670622955105,
+                "second_Negamax_d3_abT": 0.008164242402743334,
+                "results": {
+                    "2": 3,
+                    "1": 7
+                }
+            }
+        },
+        {
+            "d63_abTF": {
+                "first_Negamax_d6_abT": 0.10777834792217139,
+                "second_Negamax_d3_abF": 0.00743911717071887,
+                "results": {
+                    "1": 6,
+                    "2": 4
+                }
+            }
+        },
+        {
+            "d63_abFT": {
+                "first_Negamax_d6_abF": 0.1193446943080534,
+                "second_Negamax_d3_abT": 0.007693243051411021,
+                "results": {
+                    "1": 8,
+                    "2": 2
+                }
+            }
+        },
+        {
+            "d63_abFF": {
+                "first_Negamax_d6_abF": 0.11208797970414161,
+                "second_Negamax_d3_abF": 0.007401524437518062,
+                "results": {
+                    "2": 4,
+                    "1": 6
+                }
+            }
+        }
+    ],
+    "ConnectFour": [
+        {
+            "d35_abTT": {
+                "first_Negamax_d3_abT": 0.005511037953501248,
+                "second_Negamax_d5_abT": 0.031338849773256745,
+                "results": {
+                    "2": 10
+                }
+            }
+        },
+        {
+            "d35_abTF": {
+                "first_Negamax_d3_abT": 0.005537554847557515,
+                "second_Negamax_d5_abF": 0.03153388513716269,
+                "results": {
+                    "2": 10
+                }
+            }
+        },
+        {
+            "d35_abFT": {
+                "first_Negamax_d3_abF": 0.00551813645227077,
+                "second_Negamax_d5_abT": 0.03136527894155159,
+                "results": {
+                    "2": 10
+                }
+            }
+        },
+        {
+            "d35_abFF": {
+                "first_Negamax_d3_abF": 0.005509431773603673,
+                "second_Negamax_d5_abF": 0.03133327172637158,
+                "results": {
+                    "2": 10
+                }
+            }
+        },
+        {
+            "d63_abTT": {
+                "first_Negamax_d6_abT": 0.0705570434416969,
+                "second_Negamax_d3_abT": 0.005263786620880158,
+                "results": {
+                    "2": 10
+                }
+            }
+        },
+        {
+            "d63_abTF": {
+                "first_Negamax_d6_abT": 0.06974917802619625,
+                "second_Negamax_d3_abF": 0.005202049600024781,
+                "results": {
+                    "2": 10
+                }
+            }
+        },
+        {
+            "d63_abFT": {
+                "first_Negamax_d6_abF": 0.07035469425195755,
+                "second_Negamax_d3_abT": 0.005238712452869789,
+                "results": {
+                    "2": 10
+                }
+            }
+        },
+        {
+            "d63_abFF": {
+                "first_Negamax_d6_abF": 0.07025002941051131,
+                "second_Negamax_d3_abF": 0.005226135979051163,
+                "results": {
+                    "2": 10
+                }
+            }
+        }
+    ]
+}

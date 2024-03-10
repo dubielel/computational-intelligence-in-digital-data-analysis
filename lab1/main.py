@@ -41,33 +41,35 @@ def play_game(
 def task1(algo, num_of_games: int) -> None:
     games = (ProbabilisticConnectFour, ConnectFour)
     ultimate_results = {ProbabilisticConnectFour.__name__: [], ConnectFour.__name__: []}
-    depths = [(3, 5), (6, 3)]
+    depths = [(3, 5), (6, 3), (6, 1), (8, 1)]
+    alpha_betas = [(True, True), (True, False), (False, True), (False, False)]
 
     for game in games:
         for depth in depths:
-            ai_algo_1 = algo(depth[0])
-            ai_algo_2 = algo(depth[1])
-            player1 = AI_Player(ai_algo_1, name=f"first_{algo.__name__}_d{ai_algo_1.depth}")
-            player2 = AI_Player(ai_algo_2, name=f"second_{algo.__name__}_d{ai_algo_2.depth}")
-            
-            results = []
-            for _ in range(num_of_games):
-                winner = play_game(game, player1, player2)
-                results.append(winner)
+            for alpha_beta in alpha_betas:
+                ai_algo_1 = algo(depth[0], alpha_beta=alpha_beta[0])
+                ai_algo_2 = algo(depth[1], alpha_beta=alpha_beta[1])
+                player1 = AI_Player(ai_algo_1, name=f"first_{algo.__name__}_d{ai_algo_1.depth}_ab{'T' if ai_algo_1.alpha_beta else 'F'}")
+                player2 = AI_Player(ai_algo_2, name=f"second_{algo.__name__}_d{ai_algo_2.depth}_ab{'T' if ai_algo_2.alpha_beta else 'F'}")
 
-            counter = Counter(results)
-            print(game.__name__)
-            ultimate_results[game.__name__].append(
-                {
-                    f"d{depth[0]}{depth[1]}": {
-                        player1.name: player1.avg_of_times(),
-                        player2.name: player2.avg_of_times(),
-                        "results": counter
+                results = []
+                for _ in range(num_of_games):
+                    winner = play_game(game, player1, player2)
+                    results.append(winner)
+
+                counter = Counter(results)
+                print(game.__name__)
+                ultimate_results[game.__name__].append(
+                    {
+                        f"d{depth[0]}{depth[1]}_ab{'T' if ai_algo_1.alpha_beta else 'F'}{'T' if ai_algo_2.alpha_beta else 'F'}": {
+                            player1.name: player1.avg_of_times(),
+                            player2.name: player2.avg_of_times(),
+                            "results": counter
+                        }
                     }
-                }
-            )
+                )
 
-    with open("task1.json", "w") as fp:
+    with open("task2_a.json", "w") as fp:
         json.dump(ultimate_results, fp, indent=4)
 
 
@@ -89,4 +91,4 @@ def main():
 
 
 if __name__ == "__main__":
-    task1(Negamax, 100)
+    task1(Negamax, 10)
