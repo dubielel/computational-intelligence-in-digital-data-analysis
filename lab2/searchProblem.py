@@ -8,11 +8,10 @@
 # Attribution-NonCommercial-ShareAlike 4.0 International License.
 # See: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 
-from display import Displayable
 import matplotlib.pyplot as plt
 import random
 
-class Search_problem(Displayable):
+class Search_problem():
     """A search problem consists of:
     * a start node
     * a neighbors function that gives the neighbors of a node

@@ -81,7 +81,7 @@ class Forward_STRIPS(Search_problem):
         """
         return self.heur(state.assignment, self.goal)
 
-from searchBranchAndBound import DF_branch_and_bound
+# from searchBranchAndBound import DF_branch_and_bound
 from searchMPP import SearcherMPP
 import stripsProblem
 
