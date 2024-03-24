@@ -2,7 +2,7 @@ from copy import deepcopy
 from typing import Dict, List
 from stripsProblem import Planning_problem
 
-class BlocksWorldNaiveHeuristic():
+class BlocksWorldHeuristic():
 
     def __init__(self, problem: Planning_problem) -> None:
         self.expected_columns = self._calculate_columns(problem.goal)

@@ -48,9 +48,9 @@ class Searcher():
                             len(self.frontier), "paths remain in the frontier")
                 return self.path
             else:
-                print(4,f"Expanding: {self.path} (cost: {self.path.cost})")
+                print(4, f"Expanding: {self.path} (cost: {self.path.cost})")
                 neighs = self.problem.neighbors(self.path.end())
-                print(2,f"Expanding: {self.path} with neighbors {neighs}")
+                print(2, f"Expanding: {self.path} with neighbors {neighs}")
                 for arc in reversed(list(neighs)):
                     self.add_to_frontier(Path(self.path,arc))
                 # print(3, f"New frontier: {[p.end() for p in self.frontier]}")
@@ -102,6 +102,9 @@ class FrontierPQ(object):
     def count(self,val):
         """returns the number of elements of the frontier with value=val"""
         return sum(1 for e in self.frontierpq if e[0]==val)
+    
+    def clear(self):
+        self.frontierpq = []
 
     def __repr__(self):
         """string representation of the frontier"""

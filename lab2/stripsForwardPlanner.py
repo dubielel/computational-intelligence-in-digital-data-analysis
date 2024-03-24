@@ -48,6 +48,7 @@ class Forward_STRIPS(Search_problem):
         """is True if node is a goal.
 
         Every goal feature has the same value in the state and the goal."""
+        # print("AAAAAAAAAAAAAAAAAAAAAAAA", type(self.goal))
         return all(state.assignment[prop]==self.goal[prop]
                    for prop in self.goal)
 
