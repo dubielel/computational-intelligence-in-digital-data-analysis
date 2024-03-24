@@ -5,178 +5,187 @@ from heuristic import BlocksWorldHeuristic
 from stripsProblem import *
 from searchMPP import *
 from stripsForwardPlanner import *
-from searchGeneric import Searcher
+from time import perf_counter
 
-blocks1_blocks = { 'a', 'b', 'c' }
-blocks1_initial_state = {
-#             b
-#       a     c
-#     -----------
-#        table
-    on('a'): 'table',
-    clear('a'): True,
-    on('b'): 'c',
-    clear('b'): True,
-    on('c'): 'table',
-    clear('c'): False
-}
-blocks1_goal = {
-#          c
-#          a
-#          b
-#     -----------
-#        table
-    on('a'): 'b',
-    on('c'): 'a'
-}
+from problem1 import *
+from problem2 import *
+from problem3 import *
 
-blocks1_domain = create_blocks_world(blocks1_blocks)
-blocks1 = Planning_problem(blocks1_domain, blocks1_initial_state, blocks1_goal)
-print("=============================================================================================================================================================================================================================================================================================")
-# AStarSearcher(Forward_STRIPS(blocks1)).search()
+from problem4 import *
+from problem5 import *
+from problem6 import *
 
-# ZADANIE 1
-blocks2_blocks = { 'a', 'b', 'c', 'd', 'e' }
-blocks2_initial_state = {
-#          b  e
-#       a  c  d
-#     -----------
-#        table
-    on('a'): 'table',
-    clear('a'): True,
-    on('b'): 'c',
-    clear('b'): True,
-    on('c'): 'table',
-    clear('c'): False,
-    on('d'): 'table',
-    clear('d'): False,
-    on('e'): 'd',
-    clear('e'): True
-}
-blocks2_goal = {
-#          c
-#          a
-#          b
-#          d
-#          e
-#     -----------
-#        table
-    on('d'): 'e',
-    on('b'): 'd',
-    on('a'): 'b',
-    on('c'): 'a'
-}
-
-blocks2_domain = create_blocks_world(blocks2_blocks)
-blocks2 = Planning_problem(blocks2_domain, blocks2_initial_state, blocks2_goal)
-print("=============================================================================================================================================================================================================================================================================================")
-blocks2_heuristic = BlocksWorldHeuristic(blocks2)
-# AStarSearcher(Forward_STRIPS(blocks2)).search()
-# AStarSearcher(Forward_STRIPS(blocks2, blocks2_heuristic)).search()
+from problem7 import *
+from problem8 import *
+from problem9 import *
 
 
-blocks3_blocks = { 'a', 'b', 'c', 'd', 'e' }
-blocks3_initial_state = {
-#          b  e
-#       a  c  d
-#     -----------
-#        table
-    on('a'): 'table',
-    clear('a'): True,
-    on('b'): 'c',
-    clear('b'): True,
-    on('c'): 'table',
-    clear('c'): False,
-    on('d'): 'table',
-    clear('d'): False,
-    on('e'): 'd',
-    clear('e'): True
-}
-blocks3_goals = [
-    { on('d'): 'a' },
-    { on('d'): 'c' },
-    {
-#              c
-#              a
-#              b
-#              d
-#              e
-#         -----------
-#            table
-        on('d'): 'e',
-        on('b'): 'd',
-        on('a'): 'b',
-        on('c'): 'a'
-    }
-]
+# 3.0
+problem1_domain = create_blocks_world(problem1_blocks)
+problem1 = Planning_problem(
+    problem1_domain,
+    problem1_initial_state,
+    problem1_goal
+)
+problem1_heuristic = BlocksWorldHeuristic(problem1)
 
-blocks3_domain = create_blocks_world(blocks3_blocks)
-blocks3 = SubgoalPlanningProblem(blocks3_domain, blocks3_initial_state, blocks3_goals)
-# SubgoalSearcher(SubgoalForwardSTRIPS(blocks3)).subgoal_search()
-# SubgoalSearcher(SubgoalForwardSTRIPS(blocks3, BlocksWorldHeuristic)).subgoal_search()
+# start = perf_counter()
+# AStarSearcher(Forward_STRIPS(problem1)).search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# AStarSearcher(Forward_STRIPS(problem1, problem1_heuristic)).search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
 
 
-# ZADANIE3
-blocks4dom = create_blocks_world({'a','b','c', 'd', 'e', 'f', 'g', 'h'})
-blocks4 = SubgoalPlanningProblem(blocks4dom,
-     {
-          on('a'):'table', clear('a'): False,
-          on('b'):'h',  clear('b'): False,
-          on('c'):'b', clear('c'): False,
-          on('d'):'table', clear('d'): False,
-          on('e'): 'd', clear('e'): True,
-          on('f'): 'c', clear('f'): True,
-          on('g'): 'a', clear('g'): True,
-          on('h'):'table', clear('h'): False,
-     }, # initial state
-     [
-          {on('d'): 'a', on('a'): 'h', on('h'): 'b'}, 
-          {on('d'): 'c', on('c'): 'h', on('g'): 'd'},
-          {on('a'): 'c'},
-          {on('d'): 'e', on('b') : 'f', on('a'):'b', on('c'):'g'}
-     ])  #goal
-# SubgoalSearcher(SubgoalForwardSTRIPS(blocks4)).subgoal_search()
-# SubgoalSearcher(SubgoalForwardSTRIPS(blocks4, BlocksWorldHeuristic)).subgoal_search()
+problem2_domain = create_blocks_world(problem2_blocks)
+problem2 = Planning_problem(
+    problem2_domain,
+    problem2_initial_state,
+    problem2_goal
+)
+problem2_heuristic = BlocksWorldHeuristic(problem2)
+
+# start = perf_counter()
+# AStarSearcher(Forward_STRIPS(problem2)).search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# AStarSearcher(Forward_STRIPS(problem2, problem2_heuristic)).search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
 
 
-blocks5dom = create_blocks_world({'a','b','c', 'd', 'e', 'f', 'g'})
-blocks5 = SubgoalPlanningProblem(blocks5dom,
-     {
-          on('a'):'table', clear('a'): False,
-          on('b'):'table',  clear('b'): False,
-          on('c'):'b', clear('c'): False,
-          on('d'):'table', clear('d'): False,
-          on('e'): 'd', clear('e'): True,
-          on('f'): 'c', clear('f'): True,
-          on('g'): 'a', clear('g'): True,
-     }, # initial state
-     [
-          {on('a'): 'f'},
-          {on('d'): 'e', on('b') : 'f', on('a'):'b', on('c'):'g'},
-          {on('d'): 'a', on('a'): 'f', on('f'): 'b'}, 
-          {on('d'): 'c', on('c'): 'f', on('g'): 'd'},
-          {on('a'): 'c'},
-          
-     ])  #goal
-# SubgoalSearcher(SubgoalForwardSTRIPS(blocks5)).subgoal_search()
-# SubgoalSearcher(SubgoalForwardSTRIPS(blocks5, BlocksWorldHeuristic)).subgoal_search()
+problem3_domain = create_blocks_world(problem3_blocks)
+problem3 = Planning_problem(
+    problem3_domain,
+    problem3_initial_state,
+    problem3_goal
+)
+problem3_heuristic = BlocksWorldHeuristic(problem3)
+
+# start = perf_counter()
+# AStarSearcher(Forward_STRIPS(problem3)).search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# AStarSearcher(Forward_STRIPS(problem3, problem3_heuristic)).search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
 
 
-blocks6dom = create_blocks_world({'a','b','c', 'd', 'e', 'f'})
-blocks6 = SubgoalPlanningProblem(blocks6dom,
-     {
-          on('a'):'table', clear('a'): False,
-          on('b'):'table',  clear('b'): False,
-          on('c'):'b', clear('c'): False,
-          on('d'):'a', clear('d'): False,
-          on('e'): 'd', clear('e'): True,
-          on('f'): 'c', clear('f'): True,
-     }, # initial state
-     [
-          {on('a'): 'b', on('b'): 'c', on('c'): 'd', on('d'): 'e', on('e'): 'f'},
-          {on('d'): 'table', on('e'): 'd', on('a'): 'e', on('f'): 'b'},
-          {on('a'): 'f', on('f'): 'c', on('c'): 'd', on('e'): 'b'},
-          {on('b'): 'e', on('a'): 'c'}  
-     ])  #goal
-# SubgoalSearcher(SubgoalForwardSTRIPS(blocks6)).subgoal_search()
-SubgoalSearcher(SubgoalForwardSTRIPS(blocks6, BlocksWorldHeuristic)).subgoal_search()
+# 4.0
+# problem1 is expanded with subgoals
+problem4_domain = create_blocks_world(problem1_blocks)
+problem4 = SubgoalPlanningProblem(
+    problem4_domain,
+    problem1_initial_state,
+    [*problem4_subgoals, problem1_goal]
+)
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem4)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem4, BlocksWorldHeuristic)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+
+# problem2 is expanded with subgoals
+problem5_domain = create_blocks_world(problem2_blocks)
+problem5 = SubgoalPlanningProblem(
+    problem5_domain,
+    problem2_initial_state,
+    [*problem5_subgoals, problem2_goal]
+)
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem5)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem5, BlocksWorldHeuristic)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+
+# problem3 is expanded with subgoals
+problem6_domain = create_blocks_world(problem3_blocks)
+problem6 = SubgoalPlanningProblem(
+    problem6_domain,
+    problem3_initial_state,
+    [*problem6_subgoals, problem3_goal]
+)
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem6)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem6, BlocksWorldHeuristic)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+
+# 5.0
+problem7_domain = create_blocks_world(problem7_blocks)
+problem7 = SubgoalPlanningProblem(
+    problem7_domain,
+    problem7_initial_state,
+    [*problem7_subgoals, problem7_goal]
+)
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem7)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem7, BlocksWorldHeuristic)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+
+problem8_domain = create_blocks_world(problem8_blocks)
+problem8 = SubgoalPlanningProblem(
+    problem8_domain,
+    problem8_initial_state,
+    [*problem8_subgoals, problem8_goal]
+)
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem8)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem8, BlocksWorldHeuristic)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+
+problem9_domain = create_blocks_world(problem9_blocks)
+problem9 = SubgoalPlanningProblem(
+    problem9_domain,
+    problem9_initial_state,
+    [*problem9_subgoals, problem9_goal]
+)
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem9)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
+
+# start = perf_counter()
+# SubgoalSearcher(SubgoalForwardSTRIPS(problem9, BlocksWorldHeuristic)).subgoal_search()
+# end = perf_counter()
+# print(f'Time: {end - start}')
