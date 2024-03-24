@@ -18,7 +18,7 @@ class SubgoalSearcher(AStarSearcher):
                     self.num_expanded, "paths have been expanded and",
                             len(self.frontier), "paths remain in the frontier")
                 self.frontier.clear()
-                if not self.problem.new_goal():
+                if not self.problem.new_goal(self.path.end()):
                     return self.path
             
             #print(4, f"Expanding: {self.path} (cost: {self.path.cost})")

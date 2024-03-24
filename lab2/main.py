@@ -41,5 +41,4 @@ blocks3 = SubgoalPlanningProblem(blocks3dom,
           {on('d'): 'a'}, 
           {on('d'): 'e', on('b') : 'd', on('a'):'b', on('c'):'a'}
      ])  #goal
-heur = BlocksWorldHeuristic()
-SubgoalSearcher(SubgoalForwardSTRIPS(blocks3), BlocksWorldHeuristic).subgoal_search()
+SubgoalSearcher(SubgoalForwardSTRIPS(blocks3, BlocksWorldHeuristic)).subgoal_search()

@@ -17,7 +17,7 @@ class SubgoalForwardSTRIPS(Search_problem):
         self.goals = planning_problem.goals
         self.current_goal = 0
         self.heur_class = heur_class
-        self.heur = self._make_heur(heur_class, self.initial_state)
+        self.heur = self._new_heur(self.initial_state)
 
     def is_goal(self, state):
         """is True if node is a goal.
@@ -26,10 +26,11 @@ class SubgoalForwardSTRIPS(Search_problem):
         return all(state.assignment[prop]==self.goals[self.current_goal][prop]
                    for prop in self.goals[self.current_goal])
         
-    def new_goal(self):
+    def new_goal(self, state):
         self.current_goal += 1
         if self.current_goal == len(self.goals):
             return None
+        self.heur = self._new_heur(state)
         return self.goals[self.current_goal]
          
 
@@ -61,12 +62,11 @@ class SubgoalForwardSTRIPS(Search_problem):
         the heuristic is an (under)estimate of the cost
         of going from the state to the top-level goal.
         """
-        return self.heur[self.current_goal](state.assignment, self.goals[self.current_goal])
+        return self.heur(state.assignment, self.goals[self.current_goal])
     
-    def new_heur(self):
-        if not heur_class:
-            return [zero for _ in self.goals]
-        heurs = []
+    def _new_heur(self, state):
+        if not self.heur_class:
+            return zero
         
-        for goal in self.goals:
-            planning_problem = Planning_problem(self.prob_domain, self.initial_state)
+        planning_problem = Planning_problem(self.prob_domain, state, self.goals[self.current_goal])
+        return self.heur_class(planning_problem)
