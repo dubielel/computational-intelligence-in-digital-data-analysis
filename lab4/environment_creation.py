@@ -99,36 +99,26 @@ import gymnasium as gym
 from gymnasium import spaces
 
 
-class GridWorldEnv(gym.Env):
-    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
+class GuessNumberEnv(gym.Env):
+    metadata = {"render_modes": [], "render_fps": -1}  # TODO render_modes and render_fps
 
-    def __init__(self, render_mode=None, size=5):
-        self.size = size  # The size of the square grid
-        self.window_size = 512  # The size of the PyGame window
+    def __init__(self, render_mode=None, min_number=1, max_number=100):
+        self.min_number = min_number  # The number which is the lower threshold for the numbers range 
+        self.max_number = max_number  # The number which is the upper threshold for the numbers range 
+        self.window_size = 512  # The size of the PyGame window TODO
 
-        # Observations are dictionaries with the agent's and the target's location.
-        # Each location is encoded as an element of {0, ..., `size`}^2, i.e. MultiDiscrete([size, size]).
+        # Observations are dictionaries with the agent's and the target's numbers.
         self.observation_space = spaces.Dict(
             {
-                "agent": spaces.Box(0, size - 1, shape=(2,), dtype=int),
-                "target": spaces.Box(0, size - 1, shape=(2,), dtype=int),
+                "agent": spaces.Box(low=self.min_number, high=self.max_number, shape=(1,), dtype=int),
+                "target": spaces.Box(low=self.min_number, high=self.max_number, shape=(1,), dtype=int),
             }
         )
 
-        # We have 4 actions, corresponding to "right", "up", "left", "down"
-        self.action_space = spaces.Discrete(4)
-
-        """
-        The following dictionary maps abstract actions from `self.action_space` to
-        the direction we will walk in if that action is taken.
-        I.e. 0 corresponds to "right", 1 to "up" etc.
-        """
-        self._action_to_direction = {
-            0: np.array([1, 0]),
-            1: np.array([0, 1]),
-            2: np.array([-1, 0]),
-            3: np.array([0, -1]),
-        }
+        # The action in this env is a number from the range [min_number, max_number]
+        self.action_space = spaces.Box(
+            low=self.min_number, high=self.max_number, shape=(1,), dtype=int
+        )
 
         assert render_mode is None or render_mode in self.metadata["render_modes"]
         self.render_mode = render_mode
