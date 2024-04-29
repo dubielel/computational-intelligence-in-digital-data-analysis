@@ -103,7 +103,10 @@ class GuessNumberEnv(gym.Env):
     metadata = {"render_modes": [], "render_fps": -1}  # TODO render_modes and render_fps
 
     def __init__(self, render_mode=None, min_number=1, max_number=100):
-        self.min_number = min_number  # The number which is the lower threshold for the numbers range 
+        self._agent_number = None
+        self._target_number = None
+
+        self.min_number = min_number  # The number which is the lower threshold for the numbers range
         self.max_number = max_number  # The number which is the upper threshold for the numbers range 
         self.window_size = 512  # The size of the PyGame window TODO
 
@@ -144,7 +147,7 @@ class GuessNumberEnv(gym.Env):
 # ``reset`` and ``step`` separately:
 
     def _get_obs(self):
-        return {"agent": self._agent_location, "target": self._target_location}
+        return {"agent": self._agent_number, "target": self._target_number}
 
 # %%
 # We can also implement a similar method for the auxiliary information
@@ -152,15 +155,16 @@ class GuessNumberEnv(gym.Env):
 # to provide the manhattan distance between the agent and the target:
 
     def _get_info(self):
+        diff = self._target_number - self._agent_number
+        if diff == 0:
+            return {"distance": diff}
         return {
-            "distance": np.linalg.norm(
-                self._agent_location - self._target_location, ord=1
-            )
+            "distance": 1 if diff > 0 else -1
         }
 
 # %%
 # Oftentimes, info will also contain some data that is only available
-# inside the ``step`` method (e.g. individual reward terms). In that case,
+# inside the ``step`` method (e.g. individual reward terms). In that case,
 # we would have to update the dictionary that is returned by ``_get_info``
 # in ``step``.
 
@@ -191,15 +195,13 @@ class GuessNumberEnv(gym.Env):
         # We need the following line to seed self.np_random
         super().reset(seed=seed)
 
-        # Choose the agent's location uniformly at random
-        self._agent_location = self.np_random.integers(0, self.size, size=2, dtype=int)
+        # Choose the agent's number uniformly at random
+        self._agent_number = self.np_random.integers(self.min_number, self.max_number, dtype=int)
 
-        # We will sample the target's location randomly until it does not coincide with the agent's location
-        self._target_location = self._agent_location
-        while np.array_equal(self._target_location, self._agent_location):
-            self._target_location = self.np_random.integers(
-                0, self.size, size=2, dtype=int
-            )
+        # We will sample the target's number randomly until it does not coincide with the agent's number
+        self._target_number = self._agent_number
+        while self._target_number == self._agent_number:
+            self._target_number = self.np_random.integers(self.min_number, self.max_number, dtype=int)
 
         observation = self._get_obs()
         info = self._get_info()
@@ -225,17 +227,12 @@ class GuessNumberEnv(gym.Env):
 # use of ``_get_obs`` and ``_get_info``:
 
     def step(self, action):
-        # Map the action (element of {0,1,2,3}) to the direction we walk in
-        direction = self._action_to_direction[action]
-        # We use `np.clip` to make sure we don't leave the grid
-        self._agent_location = np.clip(
-            self._agent_location + direction, 0, self.size - 1
-        )
-        # An episode is done iff the agent has reached the target
-        terminated = np.array_equal(self._agent_location, self._target_location)
-        reward = 1 if terminated else 0  # Binary sparse rewards
+        # An episode is done if the agent has reached the target
         observation = self._get_obs()
         info = self._get_info()
+
+        reward = info["distance"]
+        terminated = 1 if info["distance"] == 0 else 0
 
         if self.render_mode == "human":
             self._render_frame()
