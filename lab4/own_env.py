@@ -1,4 +1,5 @@
 import gymnasium as gym
+from lab4.envs import GuessNumberEnv
 
 import numpy as np
 import random

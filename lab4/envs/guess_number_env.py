@@ -237,8 +237,13 @@ class GuessNumberEnv(gym.Env):
     # can use it as a skeleton for your own environments:
 
     def render(self):
-        if self.render_mode == "rgb_array":
-            return self._render_frame()
+        # if self.render_mode == "rgb_array":
+        #     return self._render_frame()
+
+        match self.render_mode:
+            case "human":
+                print(f"Agent number: {self._agent_number}, Target number: {self._target_number}, Reward: {self._get_info()['distance']}")
+                return
 
     def _render_frame(self):
         if self.window is None and self.render_mode == "human":
