@@ -1,4 +1,4 @@
-from lab4.envs import GuessNumberEnv
+from lab4.envs import guess_number_env
 from gymnasium.envs.registration import register
 
 register(
