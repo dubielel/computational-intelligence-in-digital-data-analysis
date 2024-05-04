@@ -14,7 +14,6 @@ for episode in tqdm(range(num_episodes)):
     done = False
     while not done:
         action = agent.choose_action()
-        print(f'action: {action}')
         next_observation, reward, done, _, _ = env.step(action)
         agent.update_q_table(action, reward)
         observation = next_observation
@@ -25,7 +24,6 @@ observation = env.reset()
 done = False
 while not done:
     action = agent.choose_action()
-    # print(f'Current obs: {observation} taken action: {action}')
     next_observation, reward, done, _, _ = env.step(action)
     observation = next_observation
     env.render()

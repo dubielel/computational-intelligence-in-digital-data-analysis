@@ -13,6 +13,5 @@ observation = env_sarsa.reset()
 done = False
 while not done:
     action = agent.choose_action(observation)
-    observation, reward, done, _, info = env_sarsa.step(action)
-    print(info['message'])
-    print(f"Agent number: {observation['agent']}, Target number: {observation['target']}, Reward: {reward}")
+    observation, reward, done, _, _ = env_sarsa.step(action)
+    env_sarsa.render()

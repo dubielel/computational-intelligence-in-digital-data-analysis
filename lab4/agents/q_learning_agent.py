@@ -27,7 +27,6 @@ class QLearningAgent:
         if uniform(0, 1) < self.exploration_rate:
             return self.action_space.sample()  # Explore action space
         else:
-            print(self.q_table)
             return np.argmax(self.q_table)  # Exploit learned values
 
     def update_q_table(self, action, reward):
