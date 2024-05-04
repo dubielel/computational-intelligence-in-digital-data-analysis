@@ -1,12 +1,6 @@
-import gymnasium as gym
-from lab4.envs import GuessNumberEnv
+from random import uniform
 
 import numpy as np
-import random
-from tqdm import tqdm
-
-
-env = gym.make("envs/GuessNumberEnv-v0", render_mode="human")
 
 
 class QLearningAgent:
@@ -30,7 +24,7 @@ class QLearningAgent:
         self.q_table = np.zeros((action_space.n,))
 
     def choose_action(self):
-        if random.uniform(0, 1) < self.exploration_rate:
+        if uniform(0, 1) < self.exploration_rate:
             return self.action_space.sample()  # Explore action space
         else:
             print(self.q_table)
@@ -44,29 +38,3 @@ class QLearningAgent:
 
     def decay_exploration_rate(self):
         self.exploration_rate = max(self.min_exploration_rate, self.exploration_rate * self.exploration_decay_rate)
-
-
-agent = QLearningAgent(env.observation_space['agent'], env.action_space)
-
-
-num_episodes = 1000
-for episode in tqdm(range(num_episodes)):
-    observation = env.reset()
-    done = False
-    while not done:
-        action = agent.choose_action()
-        print(f'action: {action}')
-        next_observation, reward, done, _, _ = env.step(action)
-        agent.update_q_table(action, reward)
-        observation = next_observation
-    agent.decay_exploration_rate()
-
-# Test the trained agent
-observation = env.reset()
-done = False
-while not done:
-    action = agent.choose_action()
-    # print(f'Current obs: {observation} taken action: {action}')
-    next_observation, reward, done, _, _ = env.step(action)
-    observation = next_observation
-    env.render()
