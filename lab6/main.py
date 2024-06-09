@@ -77,11 +77,12 @@ class PPOLearner:
             with torch.no_grad():
                 rb_advantages = torch.zeros_like(self.rb_rewards).to(self.params.device)
                 for t in reversed(range(end_step)):
-                    delta = self.rb_rewards[t] + self.params.gamma * self.rb_values[t + 1] * (1 - self.rb_terms[t]) - \
-                            self.rb_values[t]
-                    rb_advantages[
-                        t] = last_advantage = delta + self.params.gamma * self.params.lambd * last_advantage * (
-                                1 - self.rb_terms[t])
+                    delta = (
+                            self.rb_rewards[t]
+                            + self.params.gamma * self.rb_values[t + 1] * self.rb_terms[t + 1]
+                            - self.rb_values[t]
+                    )
+                    rb_advantages[t] = delta + self.params.gamma * self.params.gamma * rb_advantages[t + 1]
                 rb_returns = rb_advantages + self.rb_values
 
             # convert our episodes to batch of individual transitions
