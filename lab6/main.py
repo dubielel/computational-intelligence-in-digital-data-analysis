@@ -20,6 +20,7 @@ class AlgoParams:
     vf_coef: float = 0.1
     clip_coef: float = 0.1
     gamma: float = 0.99
+    lambd: float = 0.9
     batch_size: int = 32
     stack_size: int = 4
     frame_size: tuple = (64, 64)
@@ -76,8 +77,11 @@ class PPOLearner:
             with torch.no_grad():
                 rb_advantages = torch.zeros_like(self.rb_rewards).to(self.params.device)
                 for t in reversed(range(end_step)):
-                    delta = self.rb_rewards[t] + self.params.gamma * (self.rb_values[t + 1] ** 2) - self.rb_values[t]
-                    rb_advantages[t] = delta + (self.params.gamma ** 2) * rb_advantages[t + 1]
+                    delta = self.rb_rewards[t] + self.params.gamma * self.rb_values[t + 1] * (1 - self.rb_terms[t]) - \
+                            self.rb_values[t]
+                    rb_advantages[
+                        t] = last_advantage = delta + self.params.gamma * self.params.lambd * last_advantage * (
+                                1 - self.rb_terms[t])
                 rb_returns = rb_advantages + self.rb_values
 
             # convert our episodes to batch of individual transitions
