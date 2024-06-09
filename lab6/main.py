@@ -113,7 +113,7 @@ class PPOLearner:
                         clip_fracs.append(((ratio - 1.0).abs() > self.params.clip_coef).float().mean().item())
 
                     advantages = b_advantages[batch_index]
-                    advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
+                    b_advantages[batch_index] = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
 
                     pg_loss1 = -b_advantages[batch_index] * ratio
                     pg_loss2 = -b_advantages[batch_index] \
