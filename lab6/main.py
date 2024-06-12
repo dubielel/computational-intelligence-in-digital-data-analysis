@@ -30,6 +30,8 @@ class AlgoParams:
 
 class PPOLearner:
     def __init__(self, agent_class, env, params: AlgoParams):
+        self.losses = []
+        self.policy_losses = []
         self.params = params
         self.env = env
         self.agent = agent_class(env.action_space(env.possible_agents[0]).n).to(params.device)
@@ -139,6 +141,9 @@ class PPOLearner:
             y_pred, y_true = b_values.cpu().numpy(), b_returns.cpu().numpy()
             var_y = np.var(y_true)
             explained_var = np.nan if var_y == 0 else 1 - np.var(y_true - y_pred) / var_y
+
+            self.losses.append(v_loss.item())
+            self.policy_losses.append(pg_loss.item())
 
             self.visualize_step(
                 episode,
